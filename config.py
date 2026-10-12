@@ -51,3 +51,14 @@ JUDGE_MODEL = "gpt-4o-mini"
 # --- Guardrail latency budget ---
 LATENCY_BUDGET_P95_MS = 500  # Full guard target; Task 12 currently measures input guards only.
 PRESIDIO_LANGUAGE = "en"    # Presidio base language; custom VN recognizers added via PatternRecognizer
+
+_IS_E5 = "e5" in EMBEDDING_MODEL.lower()
+EMBEDDING_QUERY_PREFIX = "query: " if _IS_E5 else ""
+EMBEDDING_PASSAGE_PREFIX = "passage: " if _IS_E5 else ""
+
+RERANKER_MODEL = os.getenv("RERANKER_MODEL", "BAAI/bge-reranker-v2-m3")
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "") or os.getenv("GOOGLE_API_KEY", "")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
+GEMINI_RPM = int(os.getenv("GEMINI_RPM", "12"))
+LLM_CACHE_DIR = os.path.join(os.path.dirname(__file__), ".cache")
